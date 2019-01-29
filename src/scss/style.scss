@@ -1,0 +1,14 @@
+$test-color: blue;
+
+body {
+  background-color: inhert;
+}
+
+header {
+  color: white;
+  background-color: $test-color;
+}
+
+p {
+  font-size: 1.1rem;
+}
