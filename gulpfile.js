@@ -49,7 +49,10 @@ gulp.task('scripts', function() {
 })
 
 gulp.task('html', function() {
-  return gulp.src('src/*.html').pipe(gulp.dest('dist'))
+  return gulp
+    .src('src/**/*.html')
+    .pipe(concat('index.html'))
+    .pipe(gulp.dest('dist'))
 })
 
 gulp.task('live-server', function() {
@@ -67,7 +70,7 @@ gulp.task('watch', function() {
   gulp.watch('src/css/**/*.css', gulp.series('styles'))
   gulp.watch('src/**/*.ts', gulp.series('typescript'))
   gulp.watch('src/**/*.js', gulp.series('scripts'))
-  gulp.watch('src/*.html', gulp.series('html'))
+  gulp.watch('src/**/*.html', gulp.series('html'))
 })
 
 gulp.task(

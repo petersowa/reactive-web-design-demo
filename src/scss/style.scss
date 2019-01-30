@@ -12,3 +12,20 @@ header {
 p {
   font-size: 1.1rem;
 }
+
+footer {
+  background-color: #ccc;
+  padding: 0.5rem;
+  i {
+    color: rgb(52, 202, 52);
+  }
+  .footer-links {
+    color: black;
+    font-size: 0.7rem;
+    a {
+      font-weight: bold;
+      text-decoration: none;
+      color: black;
+    }
+  }
+}

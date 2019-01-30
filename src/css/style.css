@@ -7,3 +7,16 @@ header {
 
 p {
   font-size: 1.1rem; }
+
+footer {
+  background-color: #ccc;
+  padding: 0.5rem; }
+  footer i {
+    color: #34ca34; }
+  footer .footer-links {
+    color: black;
+    font-size: 0.7rem; }
+    footer .footer-links a {
+      font-weight: bold;
+      text-decoration: none;
+      color: black; }
