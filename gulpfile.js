@@ -7,6 +7,7 @@ const uglify = require('gulp-uglify')
 const babel = require('gulp-babel')
 const ts = require('gulp-typescript')
 const browserSync = require('browser-sync').create()
+const webpack = require('webpack-stream')
 
 sass.compiler = require('node-sass')
 
@@ -35,6 +36,13 @@ gulp.task('typescript', function() {
   return tsResult.js.pipe(gulp.dest('src/'))
 })
 
+gulp.task('webpack', function() {
+  return gulp
+    .src('src/main.js')
+    .pipe(webpack({ output: { filename: 'bundle.js' } }))
+    .pipe(gulp.dest('dist'))
+})
+
 gulp.task('scripts', function() {
   return gulp
     .src('src/**/*.js')
@@ -43,6 +51,7 @@ gulp.task('scripts', function() {
         presets: ['@babel/env'],
       })
     )
+    .pipe(webpack({}))
     .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist'))
@@ -69,11 +78,11 @@ gulp.task('watch', function() {
   gulp.watch('src/scss/**/*.scss', gulp.series('sass'))
   gulp.watch('src/css/**/*.css', gulp.series('styles'))
   gulp.watch('src/**/*.ts', gulp.series('typescript'))
-  gulp.watch('src/**/*.js', gulp.series('scripts'))
+  gulp.watch('src/**/*.js', gulp.series('webpack'))
   gulp.watch('src/**/*.html', gulp.series('html'))
 })
 
 gulp.task(
   'default',
-  gulp.parallel('sass', 'typescript', 'scripts', 'html', 'live-server', 'watch')
+  gulp.parallel('sass', 'typescript', 'webpack', 'html', 'live-server', 'watch')
 )
