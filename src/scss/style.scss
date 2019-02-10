@@ -1,4 +1,5 @@
-$test-color: blue;
+@import url('https://fonts.googleapis.com/css?family=Satisfy|Dosis|Lora');
+$test-color: green;
 
 body {
   background-color: inhert;
@@ -7,6 +8,8 @@ body {
 header {
   color: white;
   background-color: $test-color;
+  font-size: 3rem;
+  font-family: 'Satisfy';
 }
 
 p {

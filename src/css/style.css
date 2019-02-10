@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Satisfy|Dosis|Lora");
 body {
   background-color: inhert; }
 
 header {
   color: white;
-  background-color: blue; }
+  background-color: green;
+  font-size: 3rem;
+  font-family: 'Satisfy'; }
 
 p {
   font-size: 1.1rem; }
