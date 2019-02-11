@@ -8,35 +8,69 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 //import 'bootstrap-material-design/dist/css/bootstrap-material-design.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
-console.log($, jQuery)
+const appLayout = /*html*/ `
+<div class="container z-depth-2 align-middle mt-3 p-3"><h3>Get Stock Quote</h3>
+<form class="md-form">
 
-// import contactHTML from './modal'
+<input type="text" id="stock-sym" placeholder="" class="form-control"></input>
+<label for="stock-sym">Stock Symbol</label>
+</form>
+<div id='stock-quote'></div></div>
 
-const name = 'test name'
+`
 
-console.log('main.js loaded', name)
+$('#app').append(appLayout)
+$('form').submit(e => {
+  e.preventDefault()
+  const sym = $('#stock-sym').val()
+  //$('#stock-quote').append(sym)
+  $('#stock-sym').val('')
+  getQuote(sym)
+})
 
-// $('#contact-modal').html(contactHTML)
-$('#app').html(/*html*/ `<form>
-<div class="form-group">
-  <label for="exampleInputEmail1">Email address</label>
-  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-</div>
-<div class="form-group">
-  <label for="exampleInputPassword1">Password</label>
-  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-</div>
-<div class="form-check">
-  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-  <label class="form-check-label" for="exampleCheck1">Check me out</label>
-</div>
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>`)
+function updateQuoteDisplay(data) {
+  $('#stock-quote').html(/*html*/ `
+    <table class="table">
+    <thead>
+    <tr>
+    <th colspan="2">Stock Data: ${data.companyName}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Latest Price<td>
+    <td>${data.latestPrice}<td>
+    </tr>
+    <tr>
+    <td>Change Percent<td>
+    <td>${data.changePercent}<td>
+    </tr>
+    <tr>
+    <td>Open Price<td>
+    <td>${data.open}<td>
+    </tr>
+    <tr>
+    <td>Close Price<td>
+    <td>${data.close}<td>
+    </tr>
+    <tr>
+    <td>PE Rates<td>
+    <td>${data.peRatio}<td>
+    </tr>
+    <tbody>
+    </table>
+  `)
+}
 
-// $(document).ready(function() {
-//   $('p').click(function() {
-//     $(this).hide()
-//   })
-// })
-//
+function getQuote(sym = 'aapl') {
+  $.ajax({
+    type: 'GET',
+    url: `https://api.iextrading.com/1.0/stock/${sym}/quote`,
+    success: function(resp) {
+      updateQuoteDisplay(resp)
+    },
+    error: function() {
+      console.error('unable to fetch data')
+    },
+  })
+}
